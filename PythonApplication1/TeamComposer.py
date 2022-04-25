@@ -6,10 +6,9 @@ def assign_lanes(team_summoners):
     summoners_by_lane = {'TOP':[], 'JUNGLE':[], 'MIDDLE':[], 'CARRY':[], 'SUPPORT':[]}
     lanes_by_summoner = {}
     lanes_for_each_duplicated_summoner = {}
-    #team_composition = {'TOP':'', 'JUNGLE':'', 'MIDDLE':'', 'CARRY':'', 'SUPPORT':''}
-    team_composition = {}
+    team_composition = {'TOP':'', 'JUNGLE':'', 'MIDDLE':'', 'CARRY':'', 'SUPPORT':''}
 
-   #initiate data
+   #initialize data
     for lane, summoners in summoners_by_lane.items():
         for summoner in team_summoners:
             summoners.append(summoner)
@@ -17,21 +16,17 @@ def assign_lanes(team_summoners):
    #bubble sort 
     for lane, summoners in summoners_by_lane.items():
         n = len(summoners)
-        # Traverse through all array elements
         for i in range(n-1):
-        # range(n) also work but outer loop will
-        # repeat one time more than needed.
-            # Last i elements are already in place
             for j in range(0, n-i-1):
-                # traverse the array from 0 to n-i-1
-                # Swap if the element found is greater
-                # than the next element
                 if (summoners[j].number_of_matches_by_lane[lane] < summoners[j + 1].number_of_matches_by_lane[lane]) :
                     summoners[j], summoners[j + 1] = summoners[j + 1], summoners[j]
     
+    #get top ranked summoners according to the bubble sort in the team composition
     for lane, summoners in summoners_by_lane.items():
         team_composition[lane]=summoners[0]
     
+    #now we need to get rid of the potential duplicates in the team composition
+    #create a reverse dictionary of the lanes occupied by the summoners
     for key, value in team_composition.items():
         lanes_by_summoner.setdefault(value, set()).add(key)
     lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
@@ -42,16 +37,20 @@ def assign_lanes(team_summoners):
         print('\n')
         for lane in lanes:
             print('\n')
-            print('OWOOOOOOOOOOOOOOOOOOOOOO')
             print(str(lane) + ': ' + str(summoner.summoner_name.encode().decode()))
             print('\n')
+        
             
+
+
     ### ### ##
     #remove duplicates
     ### ### ##
+
     #while(len(lanes_for_each_duplicated_summoner)>1):
     i = 20
     while(i < 10):
+
         lanes_to_keep = []
         for lanes in lanes_for_each_duplicated_summoner:
             maximum_skill_gap = 0
@@ -86,7 +85,7 @@ def assign_lanes(team_summoners):
 
         i += 1
      
-    for lane, summoner in team_composition.items():
-        print('\n')
+    #for lane, summoner in team_composition.items():
+        #print('\n')
         #print(str(lane) + ': ' + str(summoner.summoner_name))
-        print('\n')
+        #print('\n')

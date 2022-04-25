@@ -17,11 +17,7 @@ class Summoner:
             game_number += 1
             match_data = Connection.watcher.match.by_id(Connection.region_v5, match_id)
             match_info = match_data['info']
-            #participants_number = 0
             for participant in match_info['participants']:
-                #participants_number += 1
-                #print('game: ' + str(game_number) + '| participant: ' + str(participants_number))
-                #if(participant['puuid'] == participant['puuid']):
                 if(participant['puuid'] == self.summoner_info['puuid']):
                     match participant['lane']:
                         case 'TOP':
@@ -46,8 +42,3 @@ class Summoner:
                                     print('ERROR: lane/role not found')
                                     print('LANE: ' + str(participant['lane']))
                                     print('ROLE: ' + str(participant['role']))
-            #print('\n')
-            #print('____________________________')
-            #print('\n')
-            
-            
