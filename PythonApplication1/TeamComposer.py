@@ -25,8 +25,13 @@ def assign_lanes(team_summoners):
     for lane, summoners in summoners_by_lane.items():
         team_composition[lane]=summoners[0]
     
-    #now we need to get rid of the potential duplicates in the team composition
-    #create a reverse dictionary of the lanes occupied by the summoners
+    #now we need to get rid of the potential duplicates in the team composition (some people might be assigned to 2 different lanes)
+    #we need to assign to these lanes the 2nd best summoner after the one who was duplicated
+    #but only when the skill gap is marginal
+    #we keep the the duplicated summoner in the lane where the skill gap between him and the second best is significant
+    #(there might be multiple duplicated summoners)
+
+    #first we create a reverse dictionary of the lanes occupied by the summoners
     for key, value in team_composition.items():
         lanes_by_summoner.setdefault(value, set()).add(key)
     lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
