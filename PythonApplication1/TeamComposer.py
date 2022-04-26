@@ -15,6 +15,7 @@ def assign_lanes(team_summoners):
             summoners.append(summoner)
 
    #bubble sort to get the best summoners at the top of the list in each lane
+   #they are ranked by the number of matches they recently did in each position
     for lane, summoners in summoners_by_lane.items():
         n = len(summoners)
         for i in range(n-1):
@@ -40,17 +41,32 @@ def assign_lanes(team_summoners):
         lanes_by_summoner.setdefault(value, set()).add(key)
     lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
 
-    #while(len(lanes_for_each_duplicated_summoner)>1):
+    
     i = 0
     print(i)
+    #print('lanes_for_each_duplicated_summoner: ')
+   # print(lanes_for_each_duplicated_summoner)
+    print('\n')
+
+    teamcomp_to_print1 = 'TEAMCOMP: '
     for lane, summoner in team_composition.items():
-        print('\n')
-        print(lane)
-        print(summoner.summoner_name)
-        print('\n')
+        teamcomp_to_print1 += lane
+        teamcomp_to_print1 += ':'
+        teamcomp_to_print1 += summoner.summoner_name
+        teamcomp_to_print1 += ', '
+    print(teamcomp_to_print1)
+    print('\n')
+
+    carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
+    for summoner in summoners_by_lane['CARRY']:
+        carrySummoners_to_print1 += summoner.summoner_name
+        carrySummoners_to_print1 += ', '
+    print(carrySummoners_to_print1)
+    print('\n')
     i += 1
 
-    while(i < 4):
+    #while(i < 4):
+    while(lanes_for_each_duplicated_summoner):
         lanes_to_keep = []
         #we iterate over all the lanes that had a duplicated summoner
         for lanes in lanes_for_each_duplicated_summoner:
@@ -85,26 +101,39 @@ def assign_lanes(team_summoners):
                 if (lane not in lanes_to_keep):
                     del summoners_by_lane[lane][0]
                     if(not summoners_by_lane[lane]):
-                        summoners_by_lane[lane].append('')
+                        del team_composition[lane]
+                        del summoners_by_lane[lane]
     
+        #reassign the top summoners to each lane
         for lane, summoners in summoners_by_lane.items():
             team_composition[lane]=summoners[0]
     
+        #check again for duplicates
+        lanes_by_summoner.clear() 
+        lanes_for_each_duplicated_summoner.clear()  
         for key, value in team_composition.items():
             lanes_by_summoner.setdefault(value, set()).add(key)
             lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
 
         print(i)
+
+        print('\n')
+
         if(i<3):
+            teamcomp_to_print1 = 'TEAMCOMP: '
             for lane, summoner in team_composition.items():
                 #print('\n')
-                print(lane)
-                print(summoner.summoner_name)
-                print('\n')
-            print('SUMMONERS IN CARRY')
+                teamcomp_to_print1 += lane
+                teamcomp_to_print1 += ': '
+                teamcomp_to_print1 += summoner.summoner_name
+                teamcomp_to_print1 += ', '
+            print(teamcomp_to_print1)
+            print('\n')
+            carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
             for summoner in summoners_by_lane['CARRY']:
-                print(summoner.summoner_name)
-                #print('\n')
+                carrySummoners_to_print1 += summoner.summoner_name
+                carrySummoners_to_print1 += ', '
+            print(carrySummoners_to_print1)
             print('\n')
         else:
             print(summoners_by_lane['CARRY'])
