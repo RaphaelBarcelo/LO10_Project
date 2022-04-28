@@ -25,4 +25,6 @@ summoner_support.number_of_matches_by_lane = {'TOP':0, 'JUNGLE':10, 'MIDDLE':20,
 #####################
 
 team_summoners = [summoner_top, summoner_jungle, summoner_middle, summoner_fake_doublelift, summoner_support] 
+
+#print(summoner_doublelift.summoner_info)
 TeamComposer.assign_lanes(team_summoners)

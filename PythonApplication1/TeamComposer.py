@@ -1,6 +1,4 @@
-import Summoner as Summoner
-import Connection as Connection
-from itertools import chain
+import Summoner
 
 def assign_lanes(team_summoners):
     
@@ -29,7 +27,7 @@ def assign_lanes(team_summoners):
 
 
 
-    
+
     #now we need to get rid of the potential duplicates in the team composition (some people might be assigned to 2 different lanes)
     #we need to assign to these lanes the 2nd best summoner after the one who was duplicated
     #but only when the skill gap is marginal
@@ -41,31 +39,23 @@ def assign_lanes(team_summoners):
         lanes_by_summoner.setdefault(value, set()).add(key)
     lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
 
-    
-    i = 0
-    print(i)
-    #print('lanes_for_each_duplicated_summoner: ')
-   # print(lanes_for_each_duplicated_summoner)
-    print('\n')
+
 
     teamcomp_to_print1 = 'TEAMCOMP: '
     for lane, summoner in team_composition.items():
-        teamcomp_to_print1 += lane
-        teamcomp_to_print1 += ':'
-        teamcomp_to_print1 += summoner.summoner_name
-        teamcomp_to_print1 += ', '
+        teamcomp_to_print1 += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
     print(teamcomp_to_print1)
-    print('\n')
 
     carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
     for summoner in summoners_by_lane['CARRY']:
-        carrySummoners_to_print1 += summoner.summoner_name
-        carrySummoners_to_print1 += ', '
+        carrySummoners_to_print1 += Summoner.Summoner(summoner).summoner_name + ', '
     print(carrySummoners_to_print1)
+    print('\n')    
     print('\n')
-    i += 1
 
-    #while(i < 4):
+
+
+
     while(lanes_for_each_duplicated_summoner):
         lanes_to_keep = []
         #we iterate over all the lanes that had a duplicated summoner
@@ -74,7 +64,7 @@ def assign_lanes(team_summoners):
             max_amount_of_matches = -1
             lane_attributed_to_duplicate_summoner = ''
             for lane in lanes:
-                #if the numbers of summoners available for a lane if > 1
+                #if the numbers of summoners available for a lane is > 1
                 if(len(summoners_by_lane[lane])>1):
                     current_amount_of_matches = summoners_by_lane[lane][0].number_of_matches_by_lane[lane]
                     current_skill_gap = current_amount_of_matches - summoners_by_lane[lane][1].number_of_matches_by_lane[lane]
@@ -87,17 +77,17 @@ def assign_lanes(team_summoners):
                     else:
                         #if the skill gap is the same but the duplicated summoner is better in the lane being iterrated
                         #he is assigned to this lane
-                        if(current_skill_gap == maximum_skill_gap and max_amount_of_matches > -1 and current_amount_of_matches > max_amount_of_matches): #check if the lane isn't the 1st one in the loop
+                        if(current_skill_gap == maximum_skill_gap and max_amount_of_matches > -1 and current_amount_of_matches > max_amount_of_matches):
                             maximum_skill_gap = current_skill_gap
                             max_amount_of_matches = current_amount_of_matches
                             lane_attributed_to_duplicate_summoner = lane
             lanes_to_keep.append(lane_attributed_to_duplicate_summoner)
     
-        #in all the lanes that have a duplicated, we delete the summoner in first position (the duplicate)
+        #in all the lanes that have a duplicate, we delete the summoner in first position (the duplicate)
         #leaving room for the summoner in second position
         for lanes in lanes_for_each_duplicated_summoner:
             for lane in lanes:
-                #we let the duplicated summoner keep the lanes he was asigned to
+                #we let the duplicated summoner keep the lanes he was assigned to
                 if (lane not in lanes_to_keep):
                     del summoners_by_lane[lane][0]
                     if(not summoners_by_lane[lane]):
@@ -115,29 +105,15 @@ def assign_lanes(team_summoners):
             lanes_by_summoner.setdefault(value, set()).add(key)
             lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
 
-        print(i)
 
-        print('\n')
 
-        if(i<3):
-            teamcomp_to_print1 = 'TEAMCOMP: '
-            for lane, summoner in team_composition.items():
-                #print('\n')
-                teamcomp_to_print1 += lane
-                teamcomp_to_print1 += ': '
-                teamcomp_to_print1 += summoner.summoner_name
-                teamcomp_to_print1 += ', '
-            print(teamcomp_to_print1)
-            print('\n')
-            carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
-            for summoner in summoners_by_lane['CARRY']:
-                carrySummoners_to_print1 += summoner.summoner_name
-                carrySummoners_to_print1 += ', '
-            print(carrySummoners_to_print1)
-            print('\n')
-        else:
-            print(summoners_by_lane['CARRY'])
-            print('\n')
-            print(team_composition)
+        teamcomp_to_print1 = 'TEAMCOMP: '
+        for lane, summoner in team_composition.items():
+            teamcomp_to_print1 += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
+        print(teamcomp_to_print1)
 
-        i += 1
+        carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
+        for summoner in summoners_by_lane['CARRY']:
+            carrySummoners_to_print1 += Summoner.Summoner(summoner).summoner_name + ', '
+        print(carrySummoners_to_print1)
+        print('\n')       
