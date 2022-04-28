@@ -41,17 +41,16 @@ def assign_lanes(team_summoners):
 
 
 
-    teamcomp_to_print1 = 'TEAMCOMP: '
+    teamcomp_to_print = 'TEAMCOMP: '
     for lane, summoner in team_composition.items():
-        teamcomp_to_print1 += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
-    print(teamcomp_to_print1)
+        teamcomp_to_print += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
+    print(teamcomp_to_print)
 
-    carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
+    carrySummoners_to_print = 'SUMMONERS IN CARRY: '
     for summoner in summoners_by_lane['CARRY']:
-        carrySummoners_to_print1 += Summoner.Summoner(summoner).summoner_name + ', '
-    print(carrySummoners_to_print1)
+        carrySummoners_to_print += Summoner.Summoner(summoner).summoner_name + ', '
+    print(carrySummoners_to_print)
     print('\n')    
-    print('\n')
 
 
 
@@ -107,13 +106,13 @@ def assign_lanes(team_summoners):
 
 
 
-        teamcomp_to_print1 = 'TEAMCOMP: '
+        teamcomp_to_print = 'TEAMCOMP: '
         for lane, summoner in team_composition.items():
-            teamcomp_to_print1 += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
-        print(teamcomp_to_print1)
+            teamcomp_to_print += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
+        print(teamcomp_to_print)
 
-        carrySummoners_to_print1 = 'SUMMONERS IN CARRY: '
+        carrySummoners_to_print = 'SUMMONERS IN CARRY: '
         for summoner in summoners_by_lane['CARRY']:
-            carrySummoners_to_print1 += Summoner.Summoner(summoner).summoner_name + ', '
-        print(carrySummoners_to_print1)
+            carrySummoners_to_print += Summoner.Summoner(summoner).summoner_name + ', '
+        print(carrySummoners_to_print)
         print('\n')       
