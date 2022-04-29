@@ -34,25 +34,21 @@ def assign_lanes(team_summoners):
     #we keep the the duplicated summoner in the lane where the skill gap between him and the second best is significant
     #(there might be multiple duplicated summoners)
 
-    #first we create a reverse dictionary of the lanes occupied by the summoners
+    #first we create a reverse dictionary of the team composition dictionary (lane:summoner)
+    #to get a dictionary of the lane(s) assigned to each summoner (summoner:lane)
     for key, value in team_composition.items():
         lanes_by_summoner.setdefault(value, set()).add(key)
     lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
 
 
-
     teamcomp_to_print = 'TEAMCOMP: '
     for lane, summoner in team_composition.items():
-        teamcomp_to_print += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
-    print(teamcomp_to_print)
-
-    carrySummoners_to_print = 'SUMMONERS IN CARRY: '
-    for summoner in summoners_by_lane['CARRY']:
-        carrySummoners_to_print += Summoner.Summoner(summoner).summoner_name + ', '
-    print(carrySummoners_to_print)
-    print('\n')    
-
-
+        #teamcomp_to_print += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
+        teamcomp_to_print += lane
+        teamcomp_to_print += ': '
+        teamcomp_to_print += summoner.summoner_name
+        teamcomp_to_print += ', '
+    print(teamcomp_to_print)  
 
 
     while(lanes_for_each_duplicated_summoner):
@@ -105,14 +101,11 @@ def assign_lanes(team_summoners):
             lanes_for_each_duplicated_summoner = [values for key, values in lanes_by_summoner.items() if len(values) > 1]
 
 
-
         teamcomp_to_print = 'TEAMCOMP: '
         for lane, summoner in team_composition.items():
-            teamcomp_to_print += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
+            #teamcomp_to_print += lane + ': ' + Summoner.Summoner(summoner).summoner_name + ', '
+            teamcomp_to_print += lane
+            teamcomp_to_print += ': '
+            teamcomp_to_print += summoner.summoner_name
+            teamcomp_to_print += ', '
         print(teamcomp_to_print)
-
-        carrySummoners_to_print = 'SUMMONERS IN CARRY: '
-        for summoner in summoners_by_lane['CARRY']:
-            carrySummoners_to_print += Summoner.Summoner(summoner).summoner_name + ', '
-        print(carrySummoners_to_print)
-        print('\n')       
