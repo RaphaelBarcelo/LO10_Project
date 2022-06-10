@@ -2,6 +2,12 @@ import Summoner
 
 
 def assign_lanes(team_summoners):
+    while '' in team_summoners:
+        team_summoners.remove('')
+    while ' ' in team_summoners:
+        team_summoners.remove('')
+    while None in team_summoners:
+        team_summoners.remove('')
     summoners_by_lane = {'TOP': [], 'JUNGLE': [], 'MIDDLE': [], 'CARRY': [], 'SUPPORT': []}
     lanes_by_summoner = {}
     lanes_for_each_duplicated_summoner = {}

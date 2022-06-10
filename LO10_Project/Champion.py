@@ -1,4 +1,6 @@
-import urllib.request, json
+import json
+import urllib.request
+
 
 class Champion:
 
@@ -11,3 +13,6 @@ class Champion:
             self.name = champion_data['name']
             self.title = champion_data['title']
             self.lore = champion_data['lore']
+
+    def get_summary(self):
+        return {'name': self.name, 'title': self.title, 'lore': self.lore}
