@@ -8,7 +8,7 @@ import numpy as np
 import time
 
 
-def sort_by_popularity():
+def get_champions_trends():
     versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
     champions_version = versions['n']['champion']
     current_champ_list = Connection.watcher.data_dragon.champions(champions_version)
