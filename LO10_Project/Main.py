@@ -12,10 +12,15 @@ def hello_world():
     return "Hello, World!"
 
 
-@app.route("/champion/<champion_name>")
+@app.route("/champions/<champion_name>")
 def get_champion_info(champion_name):
     champion = Champion.Champion(champion_name)
     return champion.get_summary()
+
+
+@app.route("/champions/")
+def get_champion_info():
+    return Champion.get_all_champions()
 
 
 @app.route("/champion_trends/")
