@@ -7,7 +7,7 @@ import Connection
 import numpy as np
 import time
 
-from LO10_Project.Champion import Champion
+import Champion
 import pandas as pd
 
 

@@ -1,8 +1,7 @@
 from flask import Flask
-
-from LO10_Project import ChampionTrendsAnalyzer
-from LO10_Project.Champion import Champion
-from LO10_Project.Summoner import Summoner
+import ChampionTrendsAnalyzer
+import Champion
+import Summoner
 
 app = Flask(__name__)
 
@@ -38,3 +37,6 @@ def get_champions_trends(summoner_name):
 def assign_lanes(summoner_name):
     summoner = Summoner.Summoner(summoner_name)
     return summoner.get_summary()
+
+if __name__ == "__main__":
+    app.run(debug=True)
