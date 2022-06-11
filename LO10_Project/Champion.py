@@ -1,7 +1,7 @@
 import json
 import urllib.request
 
-from LO10_Project import Connection
+import Connection
 
 
 class Champion:
