@@ -1,8 +1,5 @@
 from flask import jsonify
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
+import urllib.request
 import Connection
 
 
