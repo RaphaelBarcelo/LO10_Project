@@ -17,8 +17,8 @@ class Summoner:
                                                                          self.summoner_info['puuid'])
 
     def get_summary(self):
-        return {'name': self.summoner_name, 'level': self.summoner_info['summonerLevel'],
-                'rank': self.ranked_stats[0]['tier'] + ' ' + self.ranked_stats[0]['rank']}
+        return jsonify(result={'name': self.summoner_name, 'level': self.summoner_info['summonerLevel'],
+                'rank': self.ranked_stats[0]['tier'] + ' ' + self.ranked_stats[0]['rank']})
 
     def init_number_of_matches_by_lane(self):
         game_number = 0
