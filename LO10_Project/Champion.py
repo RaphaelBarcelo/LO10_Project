@@ -1,6 +1,8 @@
-import json
-import urllib.request
+from flask import jsonify
+<<<<<<< Updated upstream
+=======
 
+>>>>>>> Stashed changes
 import Connection
 
 
@@ -17,7 +19,7 @@ class Champion:
             self.lore = champion_data['lore']
 
     def get_summary(self):
-        return {'name': self.name, 'title': self.title, 'lore': self.lore}
+        return jsonify(result={'name': self.name, 'title': self.title, 'lore': self.lore})
 
 
 def get_all_champions():
@@ -29,4 +31,4 @@ def get_all_champions():
         champion_data = current_champ_list_file['data'][champion]
         current_champ_list.append({'name': champion_data['name'], 'full': champion_data['image']['full'],
                                    'sprite': champion_data['image']['sprite']})
-    return current_champ_list
+    return jsonify(result=current_champ_list)
