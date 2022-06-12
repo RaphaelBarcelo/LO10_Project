@@ -4,7 +4,7 @@ import Connection
 
 
 class Champion:
-
+    
     def __init__(self, name):
         name = name.capitalize()
         with urllib.request.urlopen(
@@ -17,7 +17,6 @@ class Champion:
 
     def get_summary(self):
         return jsonify(result={'name': self.name, 'title': self.title, 'lore': self.lore})
-
 
     def get_all_champions():
         versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)

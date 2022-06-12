@@ -29,10 +29,10 @@ class Summoner:
             return jsonify(result={
                 'name':self.summoner_name,
                 'level':self.summoner_info['summonerLevel'],
-                'accountId': self.summoner_info['accountId'],
-                'iconId': self.summoner_info['profileIconId'],
+                'account_id': self.summoner_info['accountId'],
+                'icon_id': self.summoner_info['profileIconId'],
                 'rank': self.ranked_stats[0]['tier'] + ' ' + self.ranked_stats[0]['rank'],
-                'match_history': self.match_history
+                'match_history_ids': self.match_history
             })
         except ApiError as err:
             if (err.response.status_code == 404):
