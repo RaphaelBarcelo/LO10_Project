@@ -6,7 +6,6 @@ from pytrends.request import TrendReq
 import Connection
 import numpy as np
 import time
-
 import Champion
 import pandas as pd
 

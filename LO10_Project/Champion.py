@@ -19,13 +19,16 @@ class Champion:
         return jsonify(result={'name': self.name, 'title': self.title, 'lore': self.lore})
 
 
-def get_all_champions():
-    versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
-    champions_version = versions['n']['champion']
-    current_champ_list_file = Connection.watcher.data_dragon.champions(champions_version)
-    current_champ_list = []
-    for champion in current_champ_list_file['data']:
-        champion_data = current_champ_list_file['data'][champion]
-        current_champ_list.append({'name': champion_data['name'], 'full': champion_data['image']['full'],
-                                   'sprite': champion_data['image']['sprite']})
-    return jsonify(result=current_champ_list)
+    def get_all_champions():
+        versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
+        champions_version = versions['n']['champion']
+        current_champ_list_file = Connection.watcher.data_dragon.champions(champions_version)
+        current_champ_list = []
+        for champion in current_champ_list_file['data']:
+            champion_data = current_champ_list_file['data'][champion]
+            current_champ_list.append({
+                                        'name': champion_data['name'], 
+                                        'full': champion_data['image']['full'],
+                                        'sprite': champion_data['image']['sprite']
+                                      })
+        return jsonify(result=current_champ_list)

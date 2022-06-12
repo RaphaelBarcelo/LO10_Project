@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 import ChampionTrendsAnalyzer
 import Champion
+from Match import MatchService
 import Summoner
 
 app = Flask(__name__)
@@ -33,6 +34,10 @@ def get_summoner_info(summoner_name):
     summoner = Summoner.Summoner(summoner_name)
     return summoner.get_summary()
 
+@app.route("/match/<id>")
+def get_match(id):
+    match_service = MatchService()
+    return match_service.getMatchById(id)
 
 @app.route("/team_composer/<summoner_name>")
 def assign_lanes(summoner_name):
