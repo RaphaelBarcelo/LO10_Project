@@ -1,16 +1,13 @@
 # Import TrendReq to connect to Google
-import json
 import random
-
 from pytrends.request import TrendReq
 import Connection
 import numpy as np
-import time
-import Champion
 import pandas as pd
 
 
 def get_champions_trends():
+
     versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
     champions_version = versions['n']['champion']
     current_champ_list = Connection.watcher.data_dragon.champions(champions_version)

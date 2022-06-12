@@ -1,9 +1,13 @@
 import json
 from mimetypes import init
 from re import T
+from numpy import mat
 from riotwatcher import ApiError
 import Connection as Connection
 from flask import jsonify
+
+from api.services.Match import Match
+
 
 class Summoner:
 
@@ -22,10 +26,7 @@ class Summoner:
 
     def get_summary(self):
         try:
-            self.summoner_info = Connection.watcher.summoner.by_name(Connection.region_v4, self.summoner_name)
-            self.ranked_stats = Connection.watcher.league.by_summoner(Connection.region_v4, self.summoner_info['id'])
-            self.match_history = Connection.watcher.match.matchlist_by_puuid(Connection.region_v5,
-                                                                         self.summoner_info['puuid'])
+            self.init_summoner_data()
             return jsonify(result={
                 'name':self.summoner_name,
                 'level':self.summoner_info['summonerLevel'],
@@ -38,6 +39,28 @@ class Summoner:
             if (err.response.status_code == 404):
                 return jsonify(error=404,message="Not Found"),404
 
+    def get_history_matches(self):
+       self.init_summoner_data()
+       list_matches_id = self.match_history
+       matches = []
+       for match_id in list_matches_id:
+            match_data = Match().getMatchById(match_id)
+            stat={}
+            for participant in match_data["info"]["participants"]:
+                if (participant["summonerName"] == self.summoner_name):
+                    stat["kills"] = participant["kills"]
+                    stat["assits"] = participant["assists"]
+                    stat["deaths"] = participant["deaths"]
+                    stat["visionScore"] =  participant["visionScore"]
+                    stat["championName"] = participant["championName"]
+                    stat["championLevel"] = participant["champLevel"]
+                    stat["isWin"] = participant["win"]
+                    stat["gameType"] = match_data["info"]["gameType"]
+                    stat["gameCreation"] = match_data["info"]["gameCreation"]
+                    stat["gameLength"] = participant["challenges"]["gameLength"]
+            matches.append(stat)
+       return matches
+     
     def init_number_of_matches_by_lane(self):
         game_number = 0
         for match_id in self.match_history:
