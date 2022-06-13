@@ -26,18 +26,23 @@ class Summoner:
 
     def get_summary(self):
         try:
-            self.init_summoner_data()
-            return jsonify(result={
+            self.summoner_info = Connection.watcher.summoner.by_name(Connection.region_v4, self.summoner_name)
+            self.ranked_stats = Connection.watcher.league.by_summoner(Connection.region_v4, self.summoner_info['id'])
+            self.match_history = Connection.watcher.match.matchlist_by_puuid(Connection.region_v5,
+                                                                            self.summoner_info['puuid'])
+            return {
                 'name':self.summoner_name,
                 'level':self.summoner_info['summonerLevel'],
                 'account_id': self.summoner_info['accountId'],
                 'icon_id': self.summoner_info['profileIconId'],
                 'rank': self.ranked_stats[0]['tier'] + ' ' + self.ranked_stats[0]['rank'],
                 'match_history_ids': self.match_history
-            })
+            }
         except ApiError as err:
             if (err.response.status_code == 404):
                 return jsonify(error=404,message="Not Found"),404
+            else:
+                print(err)
 
     def get_history_matches(self):
        self.init_summoner_data()
