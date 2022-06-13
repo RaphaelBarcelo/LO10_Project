@@ -72,5 +72,5 @@ def get_ranking_random():
         champion_ranking[name] = random.randint(0, 100)
     return champion_ranking
 
-init_champions()
-initiate_csv_file()
+#init_champions()
+#initiate_csv_file()
