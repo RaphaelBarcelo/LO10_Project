@@ -5,6 +5,7 @@ from Champion import Champion
 from LO10_Project import TeamComposer
 from Match import MatchService
 import Summoner
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -18,7 +19,7 @@ def hello_world():
 @app.route("/champions/<champion_name>")
 def get_champion_info(champion_name):
     champion = Champion(champion_name)
-    return Champion.get_summary()
+    return champion.get_summary()
 
 
 @app.route("/champions/")
@@ -28,7 +29,7 @@ def get_all_champion_info():
 
 @app.route("/champion_trends/")
 def get_champions_trends():
-    return ChampionTrendsAnalyzer.get_champions_trends()
+    return jsonify(ChampionTrendsAnalyzer.get_ranking_random())
 
 
 @app.route("/summoner/<summoner_name>")
