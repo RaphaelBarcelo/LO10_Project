@@ -1,54 +1,90 @@
 # Import TrendReq to connect to Google
+<<<<<<< HEAD:LO10_Project/api/services/ChampionTrendsAnalyzer.py
 import random
+=======
+import csv
+import os
+import time
+import glob
+from nordvpn_switcher import initialize_VPN, rotate_VPN
+>>>>>>> cb014d3daac6b718cd0552adc5a984ce6a13ad5d:LO10_Project/ChampionTrendsAnalyzer.py
 from pytrends.request import TrendReq
+import random
 import Connection
+<<<<<<< HEAD:LO10_Project/api/services/ChampionTrendsAnalyzer.py
 import numpy as np
 import pandas as pd
+=======
+>>>>>>> cb014d3daac6b718cd0552adc5a984ce6a13ad5d:LO10_Project/ChampionTrendsAnalyzer.py
 
+champions = {}
+path = "C://Users//zenit//Desktop//LO10 Project//data/"
 
+<<<<<<< HEAD:LO10_Project/api/services/ChampionTrendsAnalyzer.py
 def get_champions_trends():
 
+=======
+
+def init_champions():
+>>>>>>> cb014d3daac6b718cd0552adc5a984ce6a13ad5d:LO10_Project/ChampionTrendsAnalyzer.py
     versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
     champions_version = versions['n']['champion']
-    current_champ_list = Connection.watcher.data_dragon.champions(champions_version)
+    current_champ_list = Connection.watcher.data_dragon.champions(champions_version)['data']
 
-    pytrends1 = TrendReq()
-    all_champions_popularity_comparisons = {}
     for champion in current_champ_list:
-        all_champions_popularity_comparisons[champion['name']] = {}
-    for champion_1 in current_champ_list:
-        champion1_popularity_comparison = {}
-        for champion_2 in current_champ_list:
-            if champion_1 != champion_2:
-                if champion_1 not in all_champions_popularity_comparisons[champion_2]:
-                    search_terms = [champion_1['name'] + ' league of legends', champion_2['name'] + ' league of legends']
-                    champion1_popularity_comparison[champion_2['name']] = random.randint(0, 100)
-                    all_champions_popularity_comparisons[champion_2['name']][champion_1['name']] = random.randint(0, 100)
+        champions[champion] = current_champ_list[champion]['name']
 
-                    # pytrends1.build_payload(search_terms, geo='US', timeframe="today 12-m")
-                    # df1 = pytrends1.interest_over_time()
-                    # champion1_popularity_comparison[champion_2['name']] = df1[search_terms[1]].mean().round(0)
-                    # all_champions_popularity_comparisons[champion_2['name']][champion_1['name']] = df1[search_terms[0]].mean().round(0)
-                    # time.sleep(1.1)
 
-                    # averageList1 = []
-                    # for item in searchTerms:
-                    #    averageList1.append(df1[item].mean().round(0))
-                    # average_by_champion = dict(zip(champions, averageList1))
+def create_csv_file():
+    for champion, name in champions.items():
+        with open(path + champion + ".csv", "w") as my_empty_csv:
+            pass
 
-    all_champions_popularity_rating = {}
-    for champion in all_champions_popularity_comparisons:
-        comparison = all_champions_popularity_comparisons[champion]
-        averageComparisonValues = np.mean(list(comparison.values()))
-        all_champions_popularity_rating[champion] = averageComparisonValues
 
-    sorted_champions = sorted(all_champions_popularity_rating.items(), key=lambda x: x[1], reverse=True)
+# https://github.com/alexwlchan/handling-http-429-with-tenacity
+def initiate_csv_file():
+    init_champions()
+    pytrends1 = TrendReq()
+    settings = initialize_VPN(area_input=['complete rotation'])
+    for champion_1, champion_1_name in champions.items():
+        if os.stat(path + champion_1 + '.csv').st_size == 0:
+            champion1_popularity_comparison = {}
+            for champion_2, champion_2_name in champions.items():
+                if champion_1 != champion_2:
+                    search_terms = [champion_1_name + ' league of legends', champion_2_name + ' league of legends']
+                    pytrends1.build_payload(search_terms, geo='US', timeframe="today 12-m")
+                    df1 = pytrends1.interest_over_time()
+                    champion1_popularity_comparison[champion_2] = df1[search_terms[0]].mean().round(0)
+                    print(champion_1 + ' : ' + champion_2 + ' (' +
+                          str(champion1_popularity_comparison[champion_2]) + ')')
+                    time.sleep(1.1)
+            with open(path + champion_1 + '.csv', 'w') as f:
+                w = csv.writer(f)
+                w.writerows(champion1_popularity_comparison.items())
+            rotate_VPN(settings)
 
-    print(sorted_champions)
-    # with open('C://Users//zenit//Desktop//lo10_data_2.txt', 'w') as file:
-    #    file.write(json.dumps(all_champions_popularity_rating))
-    # with open('C://Users//zenit//Desktop//lo10_data_1.txt', 'w') as file:
-    #    file.write(json.dumps(all_champions_popularity_comparisons))
 
-    # print(searchTerms)
-    # print(average_by_champion)
+def get_ranking():
+    init_champions()
+    champion_ranking = {}
+    for file in glob.glob(path):
+        trends = []
+        with open(file, mode='r') as inp:
+            reader = csv.reader(inp)
+            for rows in reader:
+                trends.append(rows[1])
+        average_score = sum(trends) / len(trends)
+        champion = os.path.splitext(file)[0]
+        champion_ranking[champions[champion]] = average_score
+    return champion_ranking
+
+
+def get_ranking_random():
+    init_champions()
+    champion_ranking = {}
+    for champion, name in champions.items():
+        champion_ranking[name] = random.randint(0, 100)
+    return champion_ranking
+
+#init_champions()
+#initiate_csv_file()

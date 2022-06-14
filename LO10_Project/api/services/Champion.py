@@ -27,7 +27,7 @@ class Champion:
             'spells': self.champion_data['spells']
         }
 
-    def get_all_champions():
+    def get_all_champions(self):
         versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
         champions_version = versions['n']['champion']
         current_champ_list_file = Connection.watcher.data_dragon.champions(champions_version)
