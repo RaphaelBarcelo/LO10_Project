@@ -1,12 +1,15 @@
 # Import TrendReq to connect to Google
+import random
 import csv
 import os
 import time
 import glob
-from nordvpn_switcher import initialize_VPN, rotate_VPN
+# from nordvpn_switcher import initialize_VPN, rotate_VPN
 from pytrends.request import TrendReq
 import random
 import Connection
+import numpy as np
+import pandas as pd
 
 path = "C://Users//zenit//Desktop//LO10 Project//data/"
 champions = {}
