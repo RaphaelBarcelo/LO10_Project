@@ -1,4 +1,5 @@
-import Summoner
+from api.services.Summoner import Summoner
+from flask import jsonify
 
 
 def assign_lanes(team_summoners):
@@ -16,7 +17,13 @@ def assign_lanes(team_summoners):
     # initialize data
     for lane, summoners in summoners_by_lane.items():
         for summoner in team_summoners:
-            summoners.append(summoner)
+            if isinstance(summoner, str):
+                summoner = Summoner.Summoner(summoner)
+                summoner.init_summoner_data()
+                summoners.append(summoner)
+            else:
+                summoners.append(summoner)
+
 
     # bubble sort to get the best summoners at the top of the list in each lane
     # they are ranked by the number of matches they recently did in each position
@@ -112,3 +119,5 @@ def assign_lanes(team_summoners):
             teamcomp_to_print += summoner.summoner_name
             teamcomp_to_print += ', '
         print(teamcomp_to_print)
+
+        return jsonify(team_composition)
