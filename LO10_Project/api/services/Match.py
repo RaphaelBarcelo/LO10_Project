@@ -1,7 +1,8 @@
 from flask import jsonify
 from numpy import mat
 from riotwatcher import ApiError
-import Connection as Connection
+import LO10_Project.Connection as Connection
+
 
 class Match:
     def __init__(self):

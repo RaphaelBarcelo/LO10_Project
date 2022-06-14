@@ -1,4 +1,5 @@
-import Summoner
+import LO10_Project.api.services.Summoner
+import random
 
 
 def assign_lanes(team_summoners):
@@ -52,7 +53,7 @@ def assign_lanes(team_summoners):
         teamcomp_to_print += ', '
     print(teamcomp_to_print)
 
-    while (lanes_for_each_duplicated_summoner):
+    while lanes_for_each_duplicated_summoner:
         lanes_to_keep = []
         # we iterate over all the lanes that had a duplicated summoner
         for lanes in lanes_for_each_duplicated_summoner:
@@ -86,9 +87,9 @@ def assign_lanes(team_summoners):
         for lanes in lanes_for_each_duplicated_summoner:
             for lane in lanes:
                 # we let the duplicated summoner keep the lanes he was assigned to
-                if (lane not in lanes_to_keep):
+                if lane not in lanes_to_keep:
                     del summoners_by_lane[lane][0]
-                    if (not summoners_by_lane[lane]):
+                    if not summoners_by_lane[lane]:
                         del team_composition[lane]
                         del summoners_by_lane[lane]
 
@@ -112,3 +113,14 @@ def assign_lanes(team_summoners):
             teamcomp_to_print += summoner.summoner_name
             teamcomp_to_print += ', '
         print(teamcomp_to_print)
+
+
+def assign_lanes_random(team_summoners_list):
+    random.seed(0)
+    random.shuffle(team_summoners_list)
+    team_summoners_list
+    summoners_by_lane = {'TOP': team_summoners_list[0], 'JUNGLE': team_summoners_list[1],
+                         'MIDDLE': team_summoners_list[2], 'CARRY': team_summoners_list[3],
+                         'SUPPORT': team_summoners_list[4]}
+
+    return {'team': summoners_by_lane}

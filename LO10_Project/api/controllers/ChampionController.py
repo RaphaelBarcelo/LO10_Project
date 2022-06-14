@@ -1,15 +1,17 @@
 import this
 from flask import Blueprint
-from api.services.Champion import Champion
-from api.services.ChampionTrendsAnalyzer import init_champions
+from LO10_Project.api.services.Champion import Champion
+from LO10_Project.api.services.ChampionTrendsAnalyzer import init_champions
 from flask import jsonify
 
 champion_routes = Blueprint("champions_routes",__name__,url_prefix="/champions")
+
 
 @champion_routes.route('/')
 def get_all_champion_info():
     data = Champion.get_all_champions(this)
     return jsonify(result=data)
+
 
 @champion_routes.route("/<champion_name>")
 def get_champion_info(champion_name):
