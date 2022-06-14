@@ -1,3 +1,4 @@
+from email import message
 import json
 from mimetypes import init
 from re import T
@@ -39,16 +40,16 @@ class Summoner:
                 'match_history_ids': self.match_history
             }
         except ApiError as err:
-            if (err.response.status_code == 404):
-                return jsonify(error=404,message="Not Found"),404
-            else:
-                print(err)
-
+            raise err 
+                  
     def get_history_matches(self):
        self.init_summoner_data()
        list_matches_id = self.match_history
        matches = []
+       cnt = 0
        for match_id in list_matches_id:
+            cnt += 1
+            if (cnt > 10): break
             match_data = Match().getMatchById(match_id)
             stat={}
             for participant in match_data["info"]["participants"]:
