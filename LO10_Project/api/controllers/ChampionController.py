@@ -1,8 +1,8 @@
 import this
 from flask import Blueprint
-from api.services.Champion import Champion
-from api.services.ChampionTrendsAnalyzer import init_champions
 from flask import jsonify
+
+from LO10_Project.api.services.Champion import Champion
 
 champion_routes = Blueprint("champions_routes",__name__,url_prefix="/champions")
 
