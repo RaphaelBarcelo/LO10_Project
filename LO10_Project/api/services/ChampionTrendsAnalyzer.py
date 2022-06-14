@@ -1,32 +1,21 @@
 # Import TrendReq to connect to Google
-<<<<<<< HEAD:LO10_Project/api/services/ChampionTrendsAnalyzer.py
 import random
-=======
 import csv
 import os
 import time
 import glob
-from nordvpn_switcher import initialize_VPN, rotate_VPN
->>>>>>> cb014d3daac6b718cd0552adc5a984ce6a13ad5d:LO10_Project/ChampionTrendsAnalyzer.py
+# from nordvpn_switcher import initialize_VPN, rotate_VPN
 from pytrends.request import TrendReq
 import random
 import Connection
-<<<<<<< HEAD:LO10_Project/api/services/ChampionTrendsAnalyzer.py
 import numpy as np
 import pandas as pd
-=======
->>>>>>> cb014d3daac6b718cd0552adc5a984ce6a13ad5d:LO10_Project/ChampionTrendsAnalyzer.py
 
 champions = {}
 path = "C://Users//zenit//Desktop//LO10 Project//data/"
 
-<<<<<<< HEAD:LO10_Project/api/services/ChampionTrendsAnalyzer.py
-def get_champions_trends():
-
-=======
 
 def init_champions():
->>>>>>> cb014d3daac6b718cd0552adc5a984ce6a13ad5d:LO10_Project/ChampionTrendsAnalyzer.py
     versions = Connection.watcher.data_dragon.versions_for_region(Connection.region_v4)
     champions_version = versions['n']['champion']
     current_champ_list = Connection.watcher.data_dragon.champions(champions_version)['data']
